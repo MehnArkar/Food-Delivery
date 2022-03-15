@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:food_delivery/controllers/cart_controller.dart';
 import 'package:food_delivery/controllers/popular_product_controller.dart';
+import 'package:food_delivery/models/product_model.dart';
+import 'package:food_delivery/page/cart/cart_page.dart';
+import 'package:food_delivery/routes/routes_helper.dart';
 import 'package:food_delivery/utils/app_constants.dart';
 import 'package:food_delivery/utils/colors.dart';
 import 'package:food_delivery/utils/dimension.dart';
@@ -25,7 +29,7 @@ class _PopularFoodDetailState extends State<PopularFoodDetail> {
     var popularFood =
         Get.find<PopularProductController>().popularProductList[widget.pageId];
     PopularProductController popularController = Get.find();
-    popularController.initProduct();
+    popularController.initProduct(popularFood);
     return Scaffold(
       backgroundColor: Colors.white,
       body: Stack(
@@ -56,7 +60,40 @@ class _PopularFoodDetailState extends State<PopularFoodDetail> {
                         Get.back();
                       },
                       child: AppIcon(icon: Icons.arrow_back_ios)),
-                  AppIcon(icon: Icons.shopping_cart_outlined)
+                  GetBuilder<CartController>(builder: ((controller) {
+                    return GestureDetector(
+                      onTap: () {
+                        if (controller.totalQuantity >= 1) {
+                          Get.toNamed(RouteHelper.getCart());
+                        }
+                      },
+                      child: Stack(
+                        children: [
+                          const AppIcon(icon: Icons.shopping_cart_outlined),
+                          controller.totalQuantity >= 1
+                              ? Positioned(
+                                  right: 0,
+                                  top: 0,
+                                  child: Container(
+                                      width: 20,
+                                      height: 20,
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          color: AppColors.mainColor),
+                                      child: Center(
+                                        child: SmallText(
+                                          text: controller.totalQuantity
+                                              .toString(),
+                                          color: Colors.white,
+                                        ),
+                                      )),
+                                )
+                              : Container(),
+                        ],
+                      ),
+                    );
+                  }))
                 ],
               )),
           Positioned(
@@ -98,65 +135,73 @@ class _PopularFoodDetailState extends State<PopularFoodDetail> {
                   )))
         ],
       ),
-      bottomNavigationBar: Container(
-        padding: EdgeInsets.only(
-            top: Dimension.height30,
-            bottom: Dimension.height30,
-            left: Dimension.width20,
-            right: Dimension.width20),
-        height: Dimension.height120,
-        width: double.maxFinite,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(Dimension.radius20 * 2),
-          color: AppColors.buttonBackgroundColor,
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Container(
-              padding: EdgeInsets.all(Dimension.width20),
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(Dimension.radius20),
-                  color: Colors.white),
-              child: Row(children: [
-                GestureDetector(
-                  onTap: () {
-                    popularController.setQuantity(false);
-                  },
-                  child: Icon(
-                    Icons.remove,
-                    color: AppColors.signColor,
+      bottomNavigationBar:
+          GetBuilder<PopularProductController>(builder: (controller) {
+        return Container(
+          padding: EdgeInsets.only(
+              top: Dimension.height30,
+              bottom: Dimension.height30,
+              left: Dimension.width20,
+              right: Dimension.width20),
+          height: Dimension.height120,
+          width: double.maxFinite,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(Dimension.radius20 * 2),
+            color: AppColors.buttonBackgroundColor,
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Container(
+                padding: EdgeInsets.all(Dimension.width20),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(Dimension.radius20),
+                    color: Colors.white),
+                child: Row(children: [
+                  GestureDetector(
+                    onTap: () {
+                      popularController.setQuantity(false);
+                    },
+                    child: Icon(
+                      Icons.remove,
+                      color: AppColors.signColor,
+                    ),
                   ),
-                ),
-                SizedBox(
-                  width: Dimension.width10,
-                ),
-                Obx(() => BigText(text: popularController.quantity.toString())),
-                SizedBox(
-                  width: Dimension.width10,
-                ),
-                GestureDetector(
-                  onTap: () {
-                    popularController.setQuantity(true);
-                  },
-                  child: Icon(
-                    Icons.add,
-                    color: AppColors.signColor,
+                  SizedBox(
+                    width: Dimension.width10,
                   ),
-                )
-              ]),
-            ),
-            Container(
-              padding: EdgeInsets.all(Dimension.width20),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(Dimension.radius20),
-                color: AppColors.mainColor,
+                  BigText(text: controller.quantity.toString()),
+                  SizedBox(
+                    width: Dimension.width10,
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      popularController.setQuantity(true);
+                    },
+                    child: Icon(
+                      Icons.add,
+                      color: AppColors.signColor,
+                    ),
+                  )
+                ]),
               ),
-              child: Text('\$ ${popularFood.price} | Add to cart'),
-            )
-          ],
-        ),
-      ),
+              GestureDetector(
+                onTap: () {
+                  popularController.addItem(popularFood);
+                },
+                child: Container(
+                  padding: EdgeInsets.all(Dimension.width20),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(Dimension.radius20),
+                    color: AppColors.mainColor,
+                  ),
+                  child: Text('\$ ${popularFood.price} | Add to cart'),
+                ),
+              )
+            ],
+          ),
+        );
+      }),
     );
   }
 }

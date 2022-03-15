@@ -189,8 +189,16 @@ class _FoodPageBodyState extends State<FoodPageBody> {
                                             .recommendedProductList[index]
                                             .name),
                                     Expanded(child: Container()),
-                                    SmallText(
-                                        text: 'This is the small text size'),
+                                    Text(
+                                      recommendedController
+                                          .recommendedProductList[index]
+                                          .description,
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: const TextStyle(
+                                          color: Color(0xFF332d2b),
+                                          fontSize: 12),
+                                    ),
                                     Expanded(child: Container()),
                                     Row(
                                       mainAxisAlignment:
