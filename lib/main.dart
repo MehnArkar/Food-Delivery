@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MainFoodPage(),
+      home: const MainFoodPage(),
       initialRoute: RouteHelper.getInitial(),
       getPages: RouteHelper.routes,
     );
