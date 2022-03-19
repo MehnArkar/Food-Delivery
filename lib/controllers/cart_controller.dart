@@ -15,6 +15,8 @@ class CartController extends GetxController {
   var _totalQuantity = 0.obs;
   int get totalQuantity => _totalQuantity.value;
 
+  List<CartModel>? storageItems = [];
+
   void addItem(ProductModel product, int quantity) {
     //Check if contain
     if (_item.containsKey(product.id)) {
@@ -54,6 +56,7 @@ class CartController extends GetxController {
       print('Cart Id $key quantity ${value.quantity} added ');
     });
     getTotalQuantity();
+    cartRepo.addToCardList(getItem);
     update();
   }
 
@@ -97,5 +100,19 @@ class CartController extends GetxController {
     });
 
     return total;
+  }
+
+  List<CartModel> getCartData() {
+    setCartList = cartRepo.getCartList();
+    getTotalQuantity();
+    return storageItems!;
+  }
+
+  set setCartList(List<CartModel> item) {
+    storageItems = item;
+    print('sharedpreferences length: ' + storageItems!.length.toString());
+    for (int i = 0; i < storageItems!.length; i++) {
+      _item.putIfAbsent(storageItems![i].product!.id!, () => storageItems![i]);
+    }
   }
 }

@@ -7,4 +7,7 @@ class AppConstants {
   static const String RECOMMENDED_PRODUCT_URI = '/api/v1/products/recommended';
 
   static const String TOKEN = 'DBtoken';
+
+  //SharedPreference
+  static const String CART_LIST = "cart-list";
 }
