@@ -190,7 +190,9 @@ class RecommendedFoodDetail extends StatelessWidget {
                         borderRadius: BorderRadius.circular(Dimension.radius20),
                         color: AppColors.mainColor,
                       ),
-                      child: Text('\$ ${recommendedFood.price} | Add to cart'),
+                      child: Text(
+                          '\$ ${recommendedFood.price! * controller.quantity.value} | Add to cart',
+                          style: const TextStyle(color: Colors.white)),
                     ),
                   )
                 ],

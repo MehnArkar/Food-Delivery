@@ -9,21 +9,22 @@ class CartRepo {
   CartRepo({required this.sharedPreferences});
 
   List<String> cart = [];
+  List<String> cartHistory = [];
   void addToCardList(List<CartModel> cartList) {
     cart = [];
+    var time = DateTime.now().toString();
     cartList.forEach((element) {
-      cart.add(jsonEncode(element));
+      element.time = time;
+      return cart.add(jsonEncode(element));
     });
-
+    print(cart.toString());
     sharedPreferences.setStringList(AppConstants.CART_LIST, cart);
-    getCartList();
   }
 
   List<CartModel> getCartList() {
     List<String> cart = [];
     if (sharedPreferences.containsKey(AppConstants.CART_LIST)) {
       cart = sharedPreferences.getStringList(AppConstants.CART_LIST)!;
-      print(cart);
     }
 
     List<CartModel> cartList = [];
@@ -31,5 +32,39 @@ class CartRepo {
         (element) => cartList.add(CartModel.fromJson(jsonDecode(element))));
 
     return cartList;
+  }
+
+  void addToCartHistory() {
+    if (sharedPreferences.containsKey(AppConstants.CART_HISTORY_LIST)) {
+      cartHistory =
+          sharedPreferences.getStringList(AppConstants.CART_HISTORY_LIST)!;
+    }
+    cart.forEach((element) {
+      cartHistory.add(element);
+    });
+
+    sharedPreferences.setStringList(
+        AppConstants.CART_HISTORY_LIST, cartHistory);
+    print('Cart History list : ' + cartHistory.length.toString());
+    removeCart();
+  }
+
+  List<CartModel> getCartHistory() {
+    if (sharedPreferences.containsKey(AppConstants.CART_HISTORY_LIST)) {
+      cartHistory =
+          sharedPreferences.getStringList(AppConstants.CART_HISTORY_LIST)!;
+    }
+
+    List<CartModel> cartList = [];
+    cartHistory.forEach((element) {
+      cartList.add(CartModel.fromJson(jsonDecode(element)));
+    });
+
+    return cartList;
+  }
+
+  void removeCart() {
+    cart = [];
+    sharedPreferences.remove(AppConstants.CART_LIST);
   }
 }

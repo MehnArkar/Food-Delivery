@@ -233,14 +233,17 @@ class CartPage extends StatelessWidget {
                 ]),
               ),
               GestureDetector(
-                onTap: () {},
+                onTap: () {
+                  controller.addToCartHistory();
+                },
                 child: Container(
                   padding: EdgeInsets.all(Dimension.width20),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(Dimension.radius20),
                     color: AppColors.mainColor,
                   ),
-                  child: Text('Check Out'),
+                  child: Text('Check Out',
+                      style: const TextStyle(color: Colors.white)),
                 ),
               )
             ],

@@ -195,7 +195,10 @@ class _PopularFoodDetailState extends State<PopularFoodDetail> {
                     borderRadius: BorderRadius.circular(Dimension.radius20),
                     color: AppColors.mainColor,
                   ),
-                  child: Text('\$ ${popularFood.price} | Add to cart'),
+                  child: Text(
+                    '\$ ${popularFood.price * controller.quantity.value} | Add to cart',
+                    style: const TextStyle(color: Colors.white),
+                  ),
                 ),
               )
             ],

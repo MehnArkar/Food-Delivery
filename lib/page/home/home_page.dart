@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:food_delivery/page/cart/cart_history.dart';
 import 'package:food_delivery/page/home/main_food_page.dart';
 import 'package:food_delivery/utils/colors.dart';
 
@@ -18,11 +19,7 @@ class _HomePageState extends State<HomePage> {
         child: Text('History Page'),
       ),
     ),
-    Container(
-      child: const Center(
-        child: Text('Cart Page'),
-      ),
-    ),
+    const CartHistory(),
     Container(
       child: const Center(
         child: Text('Profile Page'),
@@ -50,14 +47,12 @@ class _HomePageState extends State<HomePage> {
           showSelectedLabels: false,
           showUnselectedLabels: false,
           items: const [
+            BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
             BottomNavigationBarItem(
-                icon: Icon(Icons.home_outlined), label: 'Home'),
+                icon: Icon(Icons.history), label: 'History'),
             BottomNavigationBarItem(
-                icon: Icon(Icons.history_outlined), label: 'History'),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.shopping_cart_outlined), label: 'Cart'),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.person_outline), label: 'Profile'),
+                icon: Icon(Icons.shopping_cart), label: 'Cart'),
+            BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
           ]),
     );
   }

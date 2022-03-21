@@ -110,9 +110,23 @@ class CartController extends GetxController {
 
   set setCartList(List<CartModel> item) {
     storageItems = item;
-    print('sharedpreferences length: ' + storageItems!.length.toString());
     for (int i = 0; i < storageItems!.length; i++) {
       _item.putIfAbsent(storageItems![i].product!.id!, () => storageItems![i]);
     }
+  }
+
+  void addToCartHistory() {
+    cartRepo.addToCartHistory();
+    clear();
+    getTotalQuantity();
+  }
+
+  void clear() {
+    _item = {};
+    update();
+  }
+
+  List<CartModel> getCartHistoryList() {
+    return cartRepo.getCartHistory();
   }
 }
