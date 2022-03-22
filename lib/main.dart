@@ -3,9 +3,6 @@ import 'package:food_delivery/controllers/cart_controller.dart';
 import 'package:food_delivery/controllers/popular_product_controller.dart';
 import 'package:food_delivery/controllers/recommend_product_controller.dart';
 import 'package:food_delivery/page/home/home_page.dart';
-
-import 'package:food_delivery/page/home/main_food_page.dart';
-import 'package:food_delivery/page/splash/splash_page.dart';
 import 'package:food_delivery/routes/routes_helper.dart';
 import 'package:get/get.dart';
 import 'package:food_delivery/helper/dependencies.dart' as dep;
