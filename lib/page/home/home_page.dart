@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:food_delivery/page/account/account_page.dart';
+import 'package:food_delivery/page/auth/sign_up_page.dart';
 import 'package:food_delivery/page/cart/cart_history.dart';
 import 'package:food_delivery/page/home/main_food_page.dart';
 import 'package:food_delivery/utils/colors.dart';
@@ -14,17 +16,9 @@ class _HomePageState extends State<HomePage> {
   int selectedIndex = 0;
   List pages = [
     const MainFoodPage(),
-    Container(
-      child: const Center(
-        child: Text('History Page'),
-      ),
-    ),
+    SignUpPage(),
     const CartHistory(),
-    Container(
-      child: const Center(
-        child: Text('Profile Page'),
-      ),
-    ),
+    const AccountPage()
   ];
 
   void onTapNav(int index) {

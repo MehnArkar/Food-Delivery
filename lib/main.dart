@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:food_delivery/controllers/cart_controller.dart';
 import 'package:food_delivery/controllers/popular_product_controller.dart';
 import 'package:food_delivery/controllers/recommend_product_controller.dart';
+import 'package:food_delivery/page/auth/sign_in_page.dart';
+import 'package:food_delivery/page/auth/sign_up_page.dart';
 import 'package:food_delivery/page/home/home_page.dart';
 import 'package:food_delivery/routes/routes_helper.dart';
 import 'package:get/get.dart';
@@ -28,7 +30,7 @@ class MyApp extends StatelessWidget {
           theme: ThemeData(
             primarySwatch: Colors.blue,
           ),
-          home: const HomePage(),
+          home: const SignInPage(),
           initialRoute: RouteHelper.getSplash(),
           getPages: RouteHelper.routes,
         );
